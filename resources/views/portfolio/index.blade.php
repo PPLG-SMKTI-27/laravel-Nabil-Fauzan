@@ -1,7 +1,5 @@
 @extends('layouts.main')
-
 @section('title', 'Portofolio Saya')
-
 @section('content')
     <div class="header">
         <h1>Halo, saya {{ $nama }}</h1>
