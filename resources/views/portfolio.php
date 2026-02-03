@@ -189,7 +189,6 @@
 
 <body>
 
-<!-- NAVBAR -->
 <nav>
   <div class="nav-container">
     <strong>TUGAS PORTFOLIO</strong>
@@ -202,7 +201,6 @@
   </div>
 </nav>
 
-<!-- DARK AREA -->
 <div class="container">
   <section id="tentang">
     <div class="tentang-wrapper">
@@ -222,7 +220,6 @@
   </section>
 </div>
 
-<!-- WHITE AREA -->
 <div class="white-area">
   <div class="container">
 
@@ -251,9 +248,8 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <p>&copy; 2026 • Tugas Portfolio — Ojan</p>
+  <p>&copy; 2026 | Tugas Portfolio • Ojan</p>
 </footer>
 
 </body>
