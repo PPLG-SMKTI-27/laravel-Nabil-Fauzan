@@ -8,24 +8,26 @@
   </section>
 
   <section>
-    @foreach ($projects as $project)
+    @forelse ($projects as $project)
       <div class="project-card">
-        <h2>{{ $project['title'] }}</h2>
-        <p>{{ $project['description'] }}</p>
+        <h2>{{ $project->title }}</h2>
+        <p>{{ $project->description }}</p>
 
         <div class="skills">
-          @foreach ($project['tech'] as $tech)
+          @foreach ($project->tech as $tech)
             <div class="skill-item">{{ $tech }}</div>
           @endforeach
         </div>
 
-        @if($project['link'])
-          <a href="{{ $project['link'] }}" class="project-link">
+        @if ($project->link)
+          <a href="{{ $project->link }}" class="project-link">
             Lihat Proyek →
           </a>
         @endif
       </div>
-    @endforeach
+    @empty
+      <p>Belum ada proyek yang ditambahkan.</p>
+    @endforelse
   </section>
 </div>
 
