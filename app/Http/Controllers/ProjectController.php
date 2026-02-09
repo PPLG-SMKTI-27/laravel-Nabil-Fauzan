@@ -10,16 +10,6 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
 
-        $data = [
-            [
-                'title' => 'Proyek Toko Kue',
-                'description' => 'Website pemesanan toko kue berbasis web menggunakan PHP dan MySQL.',
-                'tech' => ['HTML', 'CSS', 'PHP', 'MySQL'],
-                'link' => '#',
-                'projects' => $projects
-            ],
-        ];
-
         return view('pages.projects', compact('projects'));
     }
 }
