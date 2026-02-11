@@ -8,8 +8,8 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
-
+        $data = Project::all();
+        $projects = $data;
         return view('pages.projects', compact('projects'));
     }
 }
