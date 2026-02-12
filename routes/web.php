@@ -17,10 +17,11 @@ Route::get('/', function () {
 /* ===== DASHBOARD ===== */
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'logActivity'])
+  ->name('dashboard');
 
 /* ===== AUTH REQUIRED ===== */
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'logActivity'])->group(function () {
 
     /* === PROFILE (BREEZE DEFAULT) === */
     Route::get('/profile', [ProfileController::class, 'edit'])
@@ -40,6 +41,16 @@ Route::middleware('auth')->group(function () {
     /* === PROJECTS === */
     Route::get('/projects', [ProjectController::class, 'index'])
         ->name('projects');
+
+    /* ===== TEACHER AREA (KHUSUS ROLE TEACHER) ===== */
+    Route::get('/teacher', function () {
+        return view('pages.teacher');
+    })->middleware('isTeacher')->name('teacher');
+
+    /* ===== RESTRICTED AREA (UMUR 18+) ===== */
+    Route::get('/restricted', function () {
+        return view('pages.restricted');
+    })->middleware('checkAge')->name('restricted');
 });
 
 require __DIR__.'/auth.php';
