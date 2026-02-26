@@ -27,7 +27,7 @@
 
                         <div>
                             <x-input-label for="tech" value="Tech Stack (pisahkan dengan koma)" />
-                            <x-text-input id="tech" name="tech" type="text" class="mt-1 block w-full" :value="old('tech')" placeholder="Laravel, MySQL, Tailwind" />
+                            <x-text-input id="tech" name="tech" type="text" class="mt-1 block w-full" :value="old('tech')" placeholder="Laravel, MySQL, Tailwind" required />
                             <x-input-error :messages="$errors->get('tech')" class="mt-2" />
                         </div>
 

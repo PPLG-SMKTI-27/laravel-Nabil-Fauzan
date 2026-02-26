@@ -33,7 +33,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'tech' => ['nullable', 'string'],
+            'tech' => ['required', 'string'],
             'link' => ['nullable', 'url', 'max:255'],
         ]);
 
@@ -55,7 +55,7 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'tech' => ['nullable', 'string'],
+            'tech' => ['required', 'string'],
             'link' => ['nullable', 'url', 'max:255'],
         ]);
 

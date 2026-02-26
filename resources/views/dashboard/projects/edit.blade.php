@@ -30,7 +30,7 @@
                         <div>
                             <x-input-label for="tech" value="Tech Stack (pisahkan dengan koma)" />
                             <x-text-input id="tech" name="tech" type="text" class="mt-1 block w-full"
-                                          :value="old('tech', collect($project->tech)->implode(', '))" />
+                                          :value="old('tech', collect($project->tech)->implode(', '))" required />
                             <x-input-error :messages="$errors->get('tech')" class="mt-2" />
                         </div>
 
