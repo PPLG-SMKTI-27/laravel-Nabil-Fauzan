@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsTeacher
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,11 +20,11 @@ class IsTeacher
             return redirect()->route('login');
         }
 
-        // Jika bukan teacher
-        if ($user->role !== 'teacher') {
+        // Jika bukan admin
+        if ($user->role !== 'admin') {
             return redirect()
                 ->route('dashboard')
-                ->with('error', 'Akses hanya untuk guru.');
+                ->with('error', 'Akses hanya untuk admin.');
         }
 
         return $next($request);

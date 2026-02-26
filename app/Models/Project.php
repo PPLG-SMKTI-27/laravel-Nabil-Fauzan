@@ -13,7 +13,7 @@ class Project extends Model
         'description',
         'tech',
         'link',
-    ];
+    ]; 
 
     protected $casts = [
         'tech' => 'array',

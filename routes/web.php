@@ -38,14 +38,22 @@ Route::middleware(['auth', 'logActivity'])->group(function () {
         return view('pages.portfolio');
     })->name('portfolio');
 
-    /* === PROJECTS === */
-    Route::get('/projects', [ProjectController::class, 'index'])
+    Route::get('/projects', [ProjectController::class, 'publicIndex'])
         ->name('projects');
 
-    /* ===== TEACHER AREA (KHUSUS ROLE TEACHER) ===== */
-    Route::get('/teacher', function () {
-        return view('pages.teacher');
-    })->middleware('isTeacher')->name('teacher');
+    /* ===== ADMIN AREA (KHUSUS ROLE ADMIN) ===== */
+    Route::get('/admin', function () {
+        return view('pages.admin');
+    })->middleware('isAdmin')->name('admin');
+
+    Route::middleware('isAdmin')->prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+        Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+        Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+        Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    });
 
     /* ===== RESTRICTED AREA (UMUR 18+) ===== */
     Route::get('/restricted', function () {
