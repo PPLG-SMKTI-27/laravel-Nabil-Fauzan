@@ -203,15 +203,15 @@
     <div class="nav-inner">
 
         <div class="nav-left">
-            <a href="{{ url('/portfolio') }}" class="nav-logo">
-                TUGAS PORTFOLIO
+            <a href="{{ route('dashboard') }}" class="nav-logo">
+                Ojan
             </a>
 
             <div class="nav-links">
-                <a href="{{ url('/portfolio') }}#tentang">Tentang</a>
-                <a href="{{ url('/portfolio') }}#informasi">Informasi</a>
-                <a href="{{ url('/portfolio') }}#keahlian">Keahlian</a>
-                <a href="{{ url('/projects') }}">Projects</a>
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('dashboard.projects.index') }}">Kelola proyek</a>
+                <a href="{{ route('portfolio') }}">Portfolio</a>
+                <a href="{{ route('projects') }}" style="color: var(--accent);">Galeri publik</a>
             </div>
         </div>
 
@@ -232,8 +232,11 @@
 <!-- ================= CONTENT ================= -->
 <div class="container">
     <section>
-        <h1>Proyek Saya</h1>
-        <p>Berikut beberapa proyek yang pernah saya kerjakan.</p>
+        <h1>Galeri proyek (publik)</h1>
+        <p>Menampilkan <strong>semua proyek</strong> dari seluruh pengguna. Ini <strong>bukan</strong> halaman portfolio pribadi.</p>
+        <p style="margin-top: 12px; font-size: 14px; opacity: 0.9;">
+            Untuk mengubah proyek Anda (CRUD), gunakan menu <strong>Kelola proyek</strong> di atas atau tab <strong>Projects</strong> di dashboard.
+        </p>
     </section>
 </div>
 

@@ -7,7 +7,6 @@
             ? route('admin')
             : route('dashboard');
 
-        $projectsRoute = route('dashboard.projects.index');
     @endphp
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,8 +31,8 @@
                     </x-nav-link>
 
                     <x-nav-link
-                        :href="$projectsRoute"
-                        :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
+                        href="{{ route('dashboard.projects.index') }}"
+                        :active="request()->routeIs('dashboard.projects.*')">
                         Projects
                     </x-nav-link>
 
@@ -124,8 +123,8 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link
-                :href="$projectsRoute"
-                :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
+                href="{{ route('dashboard.projects.index') }}"
+                :active="request()->routeIs('dashboard.projects.*')">
                 Projects
             </x-responsive-nav-link>
 
