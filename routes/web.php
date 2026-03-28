@@ -30,8 +30,9 @@ Route::middleware(['auth', 'verified', 'logActivity'])->group(function () {
         }
         $myProjects = (clone $projectsQuery)->count();
         $recentProjects = (clone $projectsQuery)->latest()->take(5)->get();
+        $isAdmin = $user->role === 'admin';
 
-        return view('dashboard', compact('myProjects', 'recentProjects'));
+        return view('dashboard', compact('myProjects', 'recentProjects', 'isAdmin'));
     })->name('dashboard');
 
 
