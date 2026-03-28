@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -54,5 +55,23 @@ class User extends Authenticatable
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function avatarUrl(): string
+    {
+        if (! empty($this->avatar_path) && Storage::disk('public')->exists($this->avatar_path)) {
+            return Storage::disk('public')->url($this->avatar_path);
+        }
+
+        return asset('images/profile.png');
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (User $user) {
+            if (! empty($user->avatar_path)) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+        });
     }
 }

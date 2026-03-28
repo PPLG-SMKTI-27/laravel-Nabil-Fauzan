@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -26,7 +27,10 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $user = $request->user();
         $data = $request->validated();
+
+        unset($data['avatar'], $data['remove_avatar']);
 
         if (array_key_exists('skills', $data)) {
             $raw = $data['skills'] ?? '';
@@ -42,13 +46,25 @@ class ProfileController extends Controller
             $data['bio'] = null;
         }
 
-        $request->user()->fill($data);
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('avatar')) {
+            if (! empty($user->avatar_path)) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+            $user->avatar_path = $request->file('avatar')->store('avatars', 'public');
+        } elseif ($request->boolean('remove_avatar')) {
+            if (! empty($user->avatar_path)) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+            $user->avatar_path = null;
         }
 
-        $request->user()->save();
+        $user->fill($data);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }

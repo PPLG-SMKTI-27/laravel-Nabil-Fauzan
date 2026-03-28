@@ -376,7 +376,7 @@
     <section id="tentang">
         <div class="tentang-wrapper">
             <div class="profile-photo">
-                <img src="{{ asset('images/profile.png') }}" alt="Foto profil">
+                <img src="{{ $user->avatarUrl() }}" alt="Foto profil">
             </div>
             <div>
                 <h1>{{ $user->name }}</h1>
