@@ -335,7 +335,8 @@
                 <a href="#tentang">Tentang</a>
                 <a href="#keahlian">Keahlian</a>
                 <a href="#proyek-saya">Proyek</a>
-                <a href="{{ route('projects') }}">Semua Proyek</a>
+                <a href="{{ route('dashboard.projects.index') }}">Projects</a>
+                <a href="{{ route('projects') }}">Galeri publik</a>
             </div>
         </div>
 
@@ -355,7 +356,8 @@
         <a href="#tentang" @click="open = false">Tentang</a>
         <a href="#keahlian" @click="open = false">Keahlian</a>
         <a href="#proyek-saya" @click="open = false">Proyek</a>
-        <a href="{{ route('projects') }}">Semua Proyek</a>
+        <a href="{{ route('dashboard.projects.index') }}">Projects</a>
+        <a href="{{ route('projects') }}">Galeri publik</a>
         <a href="{{ route('profile.edit') }}">Profil</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -405,7 +407,7 @@
 
         <section id="proyek-saya">
             <h2>Proyek saya</h2>
-            <p class="muted" style="margin-bottom: 16px;">Data diambil dari proyek yang Anda kelola di Kelola Proyek.</p>
+            <p class="muted" style="margin-bottom: 16px;">Data dari proyek di menu <strong>Projects</strong> (CRUD). <a href="{{ route('dashboard.projects.index') }}" style="color:#1976d2;">Kelola proyek</a></p>
 
             <div class="project-grid">
                 @forelse ($portfolioProjects as $project)

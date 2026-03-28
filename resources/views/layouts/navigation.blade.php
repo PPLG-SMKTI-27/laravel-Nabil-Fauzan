@@ -7,8 +7,7 @@
             ? route('admin')
             : route('dashboard');
 
-        $publicProjectsRoute = route('projects');
-        $manageProjectsRoute = route('dashboard.projects.index');
+        $projectsRoute = route('dashboard.projects.index');
     @endphp
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,18 +31,10 @@
                         Dashboard
                     </x-nav-link>
 
-                    <!-- Semua proyek (publik) -->
                     <x-nav-link
-                        :href="$publicProjectsRoute"
-                        :active="request()->routeIs('projects')">
-                        Semua Proyek
-                    </x-nav-link>
-
-                    <!-- Manajemen CRUD -->
-                    <x-nav-link
-                        :href="$manageProjectsRoute"
-                        :active="request()->routeIs('dashboard.projects.*')">
-                        Kelola Proyek
+                        :href="$projectsRoute"
+                        :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
+                        Projects
                     </x-nav-link>
 
                     <!-- Portfolio -->
@@ -133,15 +124,9 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link
-                :href="$publicProjectsRoute"
-                :active="request()->routeIs('projects')">
-                Semua Proyek
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link
-                :href="$manageProjectsRoute"
-                :active="request()->routeIs('dashboard.projects.*')">
-                Kelola Proyek
+                :href="$projectsRoute"
+                :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
+                Projects
             </x-responsive-nav-link>
 
             <x-responsive-nav-link 

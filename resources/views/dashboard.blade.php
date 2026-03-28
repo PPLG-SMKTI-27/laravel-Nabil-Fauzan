@@ -33,7 +33,7 @@
                     <div class="mt-6 flex flex-wrap gap-3">
                         <a href="{{ route('dashboard.projects.index') }}"
                            class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700">
-                            Kelola proyek
+                            Buka Projects
                         </a>
                         <a href="{{ route('dashboard.projects.create') }}"
                            class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
