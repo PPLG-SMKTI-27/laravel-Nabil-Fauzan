@@ -13,6 +13,7 @@ class Project extends Model
         'description',
         'tech',
         'link',
+        'user_id',
     ]; 
 
     protected $casts = [

@@ -1,33 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            Dashboard
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100 space-x-3">
-                    <a href="{{ route('portfolio') }}"
-                       class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-                        Portfolio
-                    </a>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-                    @if (auth()->user()->role === 'admin')
-                        <a href="{{ route('dashboard.projects.index') }}"
-                           class="inline-block px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
-                            Kelola Projects
-                        </a>
-                    @endif
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
+                    Welcome back, {{ Auth::user()->name }} 👋
+                </h1>
+                <p class="text-gray-500 mt-2">
+                    Here’s a quick overview of your activity.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-8">
+                <p class="text-sm uppercase tracking-wide text-gray-400">
+                    Your Projects
+                </p>
+
+                <div class="mt-4 flex items-end gap-3">
+                    <span class="text-5xl font-bold text-gray-900 dark:text-white">
+                        {{ $myProjects }}
+                    </span>
+                    <span class="text-gray-500 mb-2">
+                        total created
+                    </span>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
         </div>
     </div>
 </x-app-layout>

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Project;
+
 class ProjectSeeder extends Seeder
 {
     /**
@@ -12,8 +12,9 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        Project::create([
+        Project::updateOrCreate([
             'title' => 'Proyek Toko Kue',
+        ], [
             'description' => 'Website pemesanan toko kue berbasis web menggunakan PHP dan MySQL.',
             'tech' => ['HTML', 'CSS', 'PHP', 'MySQL'],
             'link' => '#',
