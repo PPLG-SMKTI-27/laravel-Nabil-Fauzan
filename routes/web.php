@@ -22,9 +22,15 @@ Route::middleware(['auth', 'verified', 'logActivity'])->group(function () {
 
     /* ===== DASHBOARD ===== */
     Route::get('/dashboard', function () {
-        return view('dashboard', [
-            'myProjects' => Project::where('user_id', auth()->id())->count(),
-        ]);
+        $user = auth()->user();
+        $projectsQuery = Project::query();
+        if ($user->role !== 'admin') {
+            $projectsQuery->where('user_id', $user->id);
+        }
+        $myProjects = (clone $projectsQuery)->count();
+        $recentProjects = (clone $projectsQuery)->latest()->take(5)->get();
+
+        return view('dashboard', compact('myProjects', 'recentProjects'));
     })->name('dashboard');
 
 
@@ -39,9 +45,7 @@ Route::middleware(['auth', 'verified', 'logActivity'])->group(function () {
         ->name('projects');
 
     /* ===== PORTFOLIO PAGE ===== */
-    Route::get('/portfolio', function () {
-        return view('pages.portfolio');
-    })->name('portfolio');
+    Route::get('/portfolio', [ProfileController::class, 'portfolio'])->name('portfolio');
 
 
     /* ===== PROJECT CRUD (USER + ADMIN) ===== */

@@ -26,7 +26,23 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $data = $request->validated();
+
+        if (array_key_exists('skills', $data)) {
+            $raw = $data['skills'] ?? '';
+            $data['skills'] = $raw === ''
+                ? null
+                : array_values(array_filter(
+                    array_map('trim', explode(',', $raw)),
+                    fn (string $s): bool => $s !== ''
+                ));
+        }
+
+        if (array_key_exists('bio', $data) && ($data['bio'] ?? '') === '') {
+            $data['bio'] = null;
+        }
+
+        $request->user()->fill($data);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -55,19 +71,14 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    /**
-     * =========================
-     * PORTFOLIO & PROJECTS
-     * =========================
-     */
-
-    public function portfolio(): View
+    public function portfolio(Request $request): View
     {
-        return view('pages.portfolio');
-    }
+        $user = $request->user();
+        $user->load(['projects' => fn ($q) => $q->latest()]);
 
-    public function projects(): View
-    {
-        return view('pages.projects');
+        return view('pages.portfolio', [
+            'user' => $user,
+            'portfolioProjects' => $user->projects,
+        ]);
     }
 }

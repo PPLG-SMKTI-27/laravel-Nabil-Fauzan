@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Ojan</title>
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($user->bio ?? 'Portfolio pengguna.'), 160) }}">
+    <title>Portfolio | {{ $user->name }}</title>
 
-    {{-- Alpine (opsional, aman walau tidak dipakai) --}}
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
         :root {
             --accent: #4fc3f7;
             --dark: #1f1f1f;
@@ -30,7 +31,6 @@
             min-height: 100vh;
         }
 
-        /* ===== NAVBAR ===== */
         nav {
             position: fixed;
             top: 0;
@@ -45,7 +45,7 @@
             max-width: 1200px;
             margin: auto;
             padding: 0 24px;
-            height: 64px;
+            min-height: 64px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,7 +54,7 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 24px;
         }
 
         .nav-logo {
@@ -66,7 +66,8 @@
 
         .nav-links {
             display: flex;
-            gap: 26px;
+            gap: 22px;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
@@ -99,12 +100,16 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 14px;
         }
 
         .nav-user {
             font-size: 13px;
             color: #bbb;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .nav-logout {
@@ -119,12 +124,41 @@
             text-decoration: underline;
         }
 
-        /* ===== LAYOUT ===== */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .nav-mobile {
+            flex-direction: column;
+            display: flex;
+            gap: 12px;
+            padding: 16px 24px 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: rgba(12,12,12,0.95);
+        }
+
+        .nav-mobile a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav-mobile a:hover {
+            color: var(--accent);
+        }
+
         .container {
             max-width: 1000px;
             width: 90%;
             margin: auto;
-            padding: 140px 0 80px; /* offset navbar */
+            padding: 140px 0 80px;
         }
 
         section {
@@ -145,12 +179,16 @@
             padding-bottom: 60px;
         }
 
-        /* ===== TENTANG ===== */
         .tentang-wrapper {
             display: flex;
             align-items: center;
             gap: 35px;
             flex-wrap: wrap;
+        }
+
+        .tentang-wrapper h1 {
+            font-size: 1.75rem;
+            margin-bottom: 12px;
         }
 
         .profile-photo {
@@ -160,6 +198,7 @@
             background: linear-gradient(135deg, var(--accent), #1976d2);
             padding: 4px;
             box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+            flex-shrink: 0;
         }
 
         .profile-photo img {
@@ -169,7 +208,6 @@
             object-fit: cover;
         }
 
-        /* ===== SKILLS ===== */
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -185,7 +223,73 @@
             font-size: 13px;
         }
 
-        /* ===== FOOTER ===== */
+        .white-area h2 {
+            margin-bottom: 12px;
+        }
+
+        .white-area section p {
+            line-height: 1.65;
+            color: #444;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
+        }
+
+        .project-card {
+            border: 1px solid #e5e5e5;
+            border-radius: 14px;
+            padding: 18px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .project-card h3 {
+            font-size: 1.05rem;
+            color: #111;
+        }
+
+        .project-card .tech {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .project-card .desc {
+            font-size: 14px;
+            color: #444;
+            flex: 1;
+        }
+
+        .project-card a.link {
+            font-size: 14px;
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .project-card a.link:hover {
+            text-decoration: underline;
+        }
+
+        .muted {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .hint {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .hint a {
+            color: var(--accent);
+        }
+
         footer {
             background: #121212;
             color: #aaa;
@@ -194,8 +298,26 @@
             font-size: 13px;
         }
 
+        .nav-logout-desktop {
+            display: block;
+        }
+
+        @media (min-width: 769px) {
+            .nav-mobile-drawer {
+                display: none !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-logout-desktop {
                 display: none;
             }
         }
@@ -204,52 +326,61 @@
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<nav>
+<nav x-data="{ open: false }">
     <div class="nav-inner">
-
         <div class="nav-left">
-            <a href="{{ route('dashboard') }}" class="nav-logo">
-                TUGAS PORTFOLIO
-            </a>
+            <a href="{{ route('dashboard') }}" class="nav-logo">PORTFOLIO</a>
 
             <div class="nav-links">
                 <a href="#tentang">Tentang</a>
-                <a href="#informasi">Informasi</a>
                 <a href="#keahlian">Keahlian</a>
-                <a href="{{ url('/projects') }}">Projects</a>
+                <a href="#proyek-saya">Proyek</a>
+                <a href="{{ route('projects') }}">Semua Proyek</a>
             </div>
         </div>
 
         <div class="nav-right">
-            <span class="nav-user">
-                {{ Auth::user()->name }}
-            </span>
+            <span class="nav-user">{{ $user->name }}</span>
 
-            <form method="POST" action="{{ route('logout') }}">
+            <button type="button" class="nav-toggle" @click="open = !open" aria-label="Menu">☰</button>
+
+            <form method="POST" action="{{ route('logout') }}" class="nav-logout-desktop">
                 @csrf
-                <button type="submit" class="nav-logout">
-                    Logout
-                </button>
+                <button type="submit" class="nav-logout">Logout</button>
             </form>
         </div>
+    </div>
 
+    <div class="nav-mobile nav-mobile-drawer" x-show="open" x-transition x-cloak>
+        <a href="#tentang" @click="open = false">Tentang</a>
+        <a href="#keahlian" @click="open = false">Keahlian</a>
+        <a href="#proyek-saya" @click="open = false">Proyek</a>
+        <a href="{{ route('projects') }}">Semua Proyek</a>
+        <a href="{{ route('profile.edit') }}">Profil</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="nav-logout" style="padding: 0;">Logout</button>
+        </form>
     </div>
 </nav>
 
-<!-- ================= CONTENT ================= -->
+@php
+    $bioText = $user->bio;
+    $defaultBio = 'Belum ada bio. Tambahkan di menu Profil agar tampil di halaman ini.';
+    $skillsList = is_array($user->skills) ? $user->skills : [];
+@endphp
+
 <div class="container">
     <section id="tentang">
         <div class="tentang-wrapper">
             <div class="profile-photo">
-                <img src="{{ asset('images/profile.png') }}" alt="Profile">
+                <img src="{{ asset('images/profile.png') }}" alt="Foto profil">
             </div>
             <div>
-                <h1>Informasi Singkat</h1>
-                <p>
-                    Saya adalah siswa PPLG yang berfokus pada pengembangan web modern,
-                    rapi, dan efisien. Tertarik pada frontend serta backend development
-                    dan pembuatan sistem berbasis web.
+                <h1>{{ $user->name }}</h1>
+                <p>{{ $bioText ? $bioText : $defaultBio }}</p>
+                <p class="hint">
+                    <a href="{{ route('profile.edit') }}">Ubah bio &amp; keahlian di Profil</a>
                 </p>
             </div>
         </div>
@@ -259,23 +390,36 @@
 <div class="white-area">
     <div class="container">
 
-        <section id="informasi">
-            <h2>Informasi</h2>
-            <p>
-                Saya merupakan siswa Program Pengembangan Perangkat Lunak dan Gim (PPLG)
-                yang memiliki ketertarikan dalam pengembangan aplikasi berbasis web.
-            </p>
-        </section>
-
         <section id="keahlian">
             <h2>Keahlian</h2>
-            <div class="skills">
-                <div class="skill-item">HTML</div>
-                <div class="skill-item">CSS</div>
-                <div class="skill-item">JavaScript</div>
-                <div class="skill-item">PHP</div>
-                <div class="skill-item">MySQL</div>
-                <div class="skill-item">MVC</div>
+            @if (count($skillsList) > 0)
+                <div class="skills">
+                    @foreach ($skillsList as $skill)
+                        <div class="skill-item">{{ $skill }}</div>
+                    @endforeach
+                </div>
+            @else
+                <p class="muted">Belum ada keahlian yang diisi. Tambahkan di halaman Profil (pisahkan dengan koma).</p>
+            @endif
+        </section>
+
+        <section id="proyek-saya">
+            <h2>Proyek saya</h2>
+            <p class="muted" style="margin-bottom: 16px;">Data diambil dari proyek yang Anda kelola di Kelola Proyek.</p>
+
+            <div class="project-grid">
+                @forelse ($portfolioProjects as $project)
+                    <article class="project-card">
+                        <h3>{{ $project->title }}</h3>
+                        <p class="tech">{{ collect($project->tech)->implode(' · ') }}</p>
+                        <p class="desc">{{ \Illuminate\Support\Str::limit(strip_tags($project->description), 160) }}</p>
+                        @if ($project->link)
+                            <a class="link" href="{{ $project->link }}" target="_blank" rel="noopener noreferrer">Lihat proyek →</a>
+                        @endif
+                    </article>
+                @empty
+                    <p class="muted">Belum ada proyek. <a href="{{ route('dashboard.projects.create') }}" style="color:#1976d2;">Tambah proyek</a></p>
+                @endforelse
             </div>
         </section>
 
@@ -283,7 +427,7 @@
 </div>
 
 <footer>
-    <p>&copy; {{ date('Y') }} | Tugas Portfolio • Ojan</p>
+    <p>&copy; {{ date('Y') }} | Portfolio • {{ $user->name }}</p>
 </footer>
 
 </body>

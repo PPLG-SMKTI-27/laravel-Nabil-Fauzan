@@ -7,10 +7,8 @@
             ? route('admin')
             : route('dashboard');
 
-        // Route Projects beda tergantung role
-        $projectsRoute = $isAdmin
-            ? route('dashboard.projects.index')
-            : route('projects');
+        $publicProjectsRoute = route('projects');
+        $manageProjectsRoute = route('dashboard.projects.index');
     @endphp
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,11 +32,18 @@
                         Dashboard
                     </x-nav-link>
 
-                    <!-- Projects -->
-                    <x-nav-link 
-                        :href="$projectsRoute" 
-                        :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
-                        Projects
+                    <!-- Semua proyek (publik) -->
+                    <x-nav-link
+                        :href="$publicProjectsRoute"
+                        :active="request()->routeIs('projects')">
+                        Semua Proyek
+                    </x-nav-link>
+
+                    <!-- Manajemen CRUD -->
+                    <x-nav-link
+                        :href="$manageProjectsRoute"
+                        :active="request()->routeIs('dashboard.projects.*')">
+                        Kelola Proyek
                     </x-nav-link>
 
                     <!-- Portfolio -->
@@ -127,10 +132,16 @@
                 Dashboard
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link 
-                :href="$projectsRoute"
-                :active="request()->routeIs('dashboard.projects.*') || request()->routeIs('projects')">
-                Projects
+            <x-responsive-nav-link
+                :href="$publicProjectsRoute"
+                :active="request()->routeIs('projects')">
+                Semua Proyek
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link
+                :href="$manageProjectsRoute"
+                :active="request()->routeIs('dashboard.projects.*')">
+                Kelola Proyek
             </x-responsive-nav-link>
 
             <x-responsive-nav-link 

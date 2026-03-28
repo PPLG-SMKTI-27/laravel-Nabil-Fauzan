@@ -47,6 +47,23 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="bio" value="Bio singkat (untuk portfolio)" />
+            <textarea id="bio" name="bio" rows="4"
+                class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                placeholder="Ceritakan singkat tentang Anda...">{{ old('bio', $user->bio ?? '') }}</textarea>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Ditampilkan di halaman Portfolio.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('bio')" />
+        </div>
+
+        <div>
+            <x-input-label for="skills" value="Keahlian (pisahkan dengan koma)" />
+            <x-text-input id="skills" name="skills" type="text" class="mt-1 block w-full"
+                :value="old('skills', isset($user->skills) && is_array($user->skills) ? implode(', ', $user->skills) : '')"
+                placeholder="Contoh: HTML, CSS, Laravel" autocomplete="off" />
+            <x-input-error class="mt-2" :messages="$errors->get('skills')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

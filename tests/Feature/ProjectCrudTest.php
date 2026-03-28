@@ -11,13 +11,13 @@ class ProjectCrudTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_non_admin_cannot_access_project_dashboard_crud(): void
+    public function test_non_admin_can_access_project_dashboard_crud(): void
     {
         $user = User::factory()->create(['role' => 'user']);
 
         $response = $this->actingAs($user)->get(route('dashboard.projects.index'));
 
-        $response->assertRedirect(route('dashboard'));
+        $response->assertOk();
     }
 
     public function test_admin_can_create_update_and_delete_project(): void

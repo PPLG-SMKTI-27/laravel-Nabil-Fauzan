@@ -23,4 +23,9 @@ class Project extends Model
     protected $primaryKey = 'id';
 
     public $timestamps = true;
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
