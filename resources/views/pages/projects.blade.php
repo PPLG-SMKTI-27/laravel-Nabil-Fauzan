@@ -237,6 +237,21 @@
         <p style="margin-top: 12px; font-size: 14px; opacity: 0.9;">
             Untuk mengubah proyek Anda (CRUD), gunakan menu <strong>Kelola proyek</strong> di atas atau tab <strong>Projects</strong> di dashboard.
         </p>
+
+        <form method="GET" action="{{ route('projects') }}" style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="q" style="display: block; font-size: 13px; color: #bbb; margin-bottom: 6px;">Cari proyek</label>
+                <input type="search" name="q" id="q" value="{{ $q }}"
+                       placeholder="Judul, deskripsi, teknologi…"
+                       style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.25); color: #fff;">
+            </div>
+            <button type="submit" style="padding: 10px 20px; border-radius: 10px; border: none; background: var(--accent); color: #111; font-weight: 600; cursor: pointer;">
+                Cari
+            </button>
+            @if ($q !== '')
+                <a href="{{ route('projects') }}" style="padding: 10px 16px; color: #ccc; font-size: 14px;">Reset</a>
+            @endif
+        </form>
     </section>
 </div>
 
@@ -262,9 +277,20 @@
                     @endif
                 </div>
             @empty
-                <p>Belum ada proyek yang ditambahkan.</p>
+                <p>Tidak ada proyek yang cocok{{ $q !== '' ? ' dengan pencarian ini' : '' }}.</p>
             @endforelse
         </section>
+
+        @if ($projects->hasPages())
+            <div style="display: flex; justify-content: center; gap: 24px; padding: 24px 0 0; flex-wrap: wrap;">
+                @if (!$projects->onFirstPage())
+                    <a href="{{ $projects->previousPageUrl() }}" style="color: var(--accent); text-decoration: none; font-weight: 500;">← Sebelumnya</a>
+                @endif
+                @if ($projects->hasMorePages())
+                    <a href="{{ $projects->nextPageUrl() }}" style="color: var(--accent); text-decoration: none; font-weight: 500;">Selanjutnya →</a>
+                @endif
+            </div>
+        @endif
 
     </div>
 </div>

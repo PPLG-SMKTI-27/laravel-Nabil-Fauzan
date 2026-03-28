@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Models\User;
@@ -85,6 +86,9 @@ Route::middleware(['auth', 'verified', 'logActivity'])->group(function () {
             ]);
         })->name('admin');
 
+        Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+        Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     });
 
 });

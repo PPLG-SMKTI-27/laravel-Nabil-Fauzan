@@ -43,6 +43,14 @@
                         Portfolio
                     </x-nav-link>
 
+                    @if ($isAdmin)
+                        <x-nav-link
+                            href="{{ route('admin.users.index') }}"
+                            :active="request()->routeIs('admin.users.*')">
+                            Users
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 
@@ -128,11 +136,19 @@
                 Projects
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link 
+                    <x-responsive-nav-link 
                 :href="route('portfolio')"
                 :active="request()->routeIs('portfolio')">
                 Portfolio
             </x-responsive-nav-link>
+
+            @if ($isAdmin)
+                <x-responsive-nav-link
+                    href="{{ route('admin.users.index') }}"
+                    :active="request()->routeIs('admin.users.*')">
+                    Users
+                </x-responsive-nav-link>
+            @endif
 
         </div>
 

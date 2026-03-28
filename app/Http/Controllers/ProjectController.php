@@ -11,22 +11,39 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
     /* ===== PUBLIC LIST ===== */
-    public function publicIndex(): View
+    public function publicIndex(Request $request): View
     {
-        $projects = Project::latest()->get();
-        return view('pages.projects', compact('projects'));
+        $q = trim((string) $request->input('q', ''));
+
+        $projects = Project::query()
+            ->search($q)
+            ->latest()
+            ->simplePaginate(12)
+            ->withQueryString();
+
+        return view('pages.projects', [
+            'projects' => $projects,
+            'q' => $q,
+        ]);
     }
 
     /* ===== DASHBOARD LIST ===== */
-    public function index(): View
+    public function index(Request $request): View
     {
-        if (Auth::user()->role === 'admin') {
-            $projects = Project::latest()->get();
-        } else {
-            $projects = Project::where('user_id', Auth::id())->latest()->get();
+        $q = trim((string) $request->input('q', ''));
+
+        $base = Project::query()->search($q);
+
+        if (Auth::user()->role !== 'admin') {
+            $base->where('user_id', Auth::id());
         }
 
-        return view('dashboard.projects.index', compact('projects'));
+        $projects = $base->latest()->paginate(15)->withQueryString();
+
+        return view('dashboard.projects.index', [
+            'projects' => $projects,
+            'q' => $q,
+        ]);
     }
 
     /* ===== CREATE ===== */

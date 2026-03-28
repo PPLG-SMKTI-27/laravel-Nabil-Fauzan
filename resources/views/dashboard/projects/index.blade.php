@@ -18,15 +18,32 @@
     </x-slot>
 
     <div class="py-10">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg overflow-hidden p-4 sm:p-6">
+                <form method="GET" action="{{ route('dashboard.projects.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-end">
+                    <div class="flex-1">
+                        <label for="q" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cari proyek</label>
+                        <input type="search" name="q" id="q" value="{{ $q }}"
+                               placeholder="Judul, deskripsi, atau teknologi…"
+                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit"
+                                class="inline-flex justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                            Cari
+                        </button>
+                        @if ($q !== '')
+                            <a href="{{ route('dashboard.projects.index') }}"
+                               class="inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                Reset
+                            </a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg overflow-hidden">
                 <div class="p-4 sm:p-6">
-                    @if (session('success'))
-                        <div class="mb-4 rounded-md bg-emerald-100 text-emerald-800 px-4 py-3">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
                     {{-- Desktop: tabel --}}
                     <div class="hidden md:block overflow-x-auto">
                         <table class="w-full text-left border-collapse text-white">
@@ -85,7 +102,7 @@
                         </table>
                     </div>
 
-                    {{-- Mobile: kartu (CRUD tetap tampil) --}}
+                    {{-- Mobile: kartu --}}
                     <div class="md:hidden space-y-4">
                         @forelse ($projects as $project)
                             <div class="rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 p-4 text-gray-100">
@@ -122,6 +139,10 @@
                         @empty
                             <p class="py-6 text-center text-gray-400">Belum ada data project.</p>
                         @endforelse
+                    </div>
+
+                    <div class="mt-6">
+                        {{ $projects->links() }}
                     </div>
                 </div>
             </div>

@@ -16,13 +16,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- Total Users -->
-                <div class="bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition duration-300">
+                <a href="{{ route('admin.users.index') }}" class="block bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition duration-300 ring-1 ring-transparent hover:ring-blue-200">
                     <p class="text-gray-500 text-sm">Total Users</p>
                     <h2 class="text-4xl font-bold text-blue-600 mt-2">
                         {{ $totalUsers ?? 0 }}
                     </h2>
-                    <p class="text-xs text-gray-400 mt-3">Daftar terbaru ada di bawah.</p>
-                </div>
+                    <p class="text-xs text-gray-400 mt-3">Klik untuk manajemen user</p>
+                </a>
 
                 <!-- Total Projects -->
                 <a href="{{ route('dashboard.projects.index') }}" class="block bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition duration-300 ring-1 ring-transparent hover:ring-green-200">
